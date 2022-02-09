@@ -3,6 +3,8 @@
 
 Quarkus REST API with Hibernate ORM, Panache, RESTEasy, and PostgreSQL. Requires JDK 11.
 
+NOTE: Perfoming a native Quarkus build with the `packagenative` command fails on [Eclipse Che Hosted by Red Hat](https://www.eclipse.org/che/docs/che-7/hosted-che/hosted-che) due to the 7GB usage limit.
+
 ## Endpoints
 | Method | Endpoint                            | Description                                                |
 |--------|-------------------------------------|------------------------------------------------------------|
