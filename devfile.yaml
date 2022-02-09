@@ -5,6 +5,7 @@ components:
   - id: redhat/quarkus-java11/latest
     type: chePlugin
     registryUrl: 'https://eclipse-che.github.io/che-plugin-registry/7.42.0/v3/'
+    memoryLimit: 256Mi
   - id: redhat/java11/latest
     preferences:
       java.server.launchMode: Standard
@@ -50,7 +51,7 @@ components:
     type: dockerimage
     alias: ubi-minimal
     image: registry.access.redhat.com/ubi8/ubi-minimal
-  - memoryLimit: 512Mi
+  - memoryLimit: 256Mi
     type: dockerimage
     image: postgres:13.3
     alias: postgres
