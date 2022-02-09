@@ -9,6 +9,7 @@ Quarkus REST API with Hibernate ORM, Panache, RESTEasy, and PostgreSQL. Requires
 | `GET`  | `/food`                             | Lists all Food resources                                   |
 | `GET`  | `/food/{id}`                        | Retrieves the Food resource with the specified ID          |
 | `GET`  | `/food/search/{name}`               | Retrieves a Food resource with the specified name          |
+| `GET`  | `/food/restaurant/{restaurantName}` | Lists all Food resources with the specified restaurantName |
 | `POST` | `/food`                             | Creates a Food resource                                    |
 
 ## Local development
