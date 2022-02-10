@@ -2,10 +2,6 @@ apiVersion: 1.0.0
 metadata:
   name: quarkus-api-example-
 components:
-  - id: redhat/quarkus-java11/latest
-    type: chePlugin
-    registryUrl: 'https://eclipse-che.github.io/che-plugin-registry/7.42.0/v3/'
-    memoryLimit: 256Mi
   - id: redhat/java11/latest
     preferences:
       java.server.launchMode: Standard
@@ -53,23 +49,23 @@ components:
     image: registry.access.redhat.com/ubi8/ubi-minimal
   - memoryLimit: 256Mi
     type: dockerimage
-    image: postgres:13.3
-    alias: postgres
+    alias: postgresql
+    image: 'quay.io/centos7/postgresql-13-centos7@sha256:994f5c622e2913bda1c4a7fa3b0c7e7f75e7caa3ac66ff1ed70ccfe65c40dd75'
     env:
-      - name: POSTGRES_USER
-        value: user
-      - name: POSTGRES_PASSWORD
-        value: password
-      - name: POSTGRES_DB
-        value: food_db
-      - name: PGDATA
-        value: /tmp/pgdata
+      - value: user
+        name: POSTGRESQL_USER
+      - value: password
+        name: POSTGRESQL_PASSWORD
+      - value: food_db
+        name: POSTGRESQL_DATABASE
+      - value: /tmp/pgdata
+        name: PGDATA
 commands:
   - name: Package
     actions:
       - workdir: '${CHE_PROJECTS_ROOT}/quarkus-api-example'
         type: exec
-        command: ./mvnw package
+        command: ./mvnw clean package -Dmaven.test.skip
         component: centos-quarkus-maven
   - name: Start Development mode (Hot reload + debug)
     actions:
