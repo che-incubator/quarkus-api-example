@@ -4,7 +4,7 @@ metadata:
 components:
   - name: tools
     container:
-      image: quay.io/devfile/universal-developer-image:ubi8-d433ed6
+      image: quay.io/devfile/universal-developer-image:ubi8-3055e6d
       env:
         - name: QUARKUS_HTTP_HOST
           value: 0.0.0.0
@@ -21,7 +21,7 @@ components:
       volumeMounts:
         - name: m2
           path: /home/user/.m2
-      memoryLimit: 4G
+      memoryLimit: 6G
       mountSources: true
 
   - name: ubi-minimal
@@ -70,7 +70,7 @@ commands:
       label: "Package Native"
       component: tools
       workingDir: ${PROJECTS_ROOT}/quarkus-api-example
-      commandLine: "./mvnw package -Dnative -Dmaven.test.skip -Dquarkus.native.native-image-xmx=2G"
+      commandLine: "./mvnw package -Dnative -Dmaven.test.skip -Dquarkus.native.native-image-xmx=3G"
       group:
         kind: build
   - id: startdev
