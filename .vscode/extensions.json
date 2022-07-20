@@ -4,7 +4,6 @@
     "recommendations": [
       "redhat.java",
       "redhat.vscode-quarkus",
-      "github.vscode-pull-request-github",
       "genuitecllc.codetogether"
     ]
 }
