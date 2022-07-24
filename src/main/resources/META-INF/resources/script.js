@@ -1,7 +1,7 @@
 let foodEndpoint = window.location.origin + "/food"
 
 function convertJsonToHtmlTable(response){
-	    var json = JSON.parse(response);
+    var json = JSON.parse(response);
         //Get the headers from JSON data
         var headers = Object.keys(json[0]);
          
@@ -31,6 +31,15 @@ function convertJsonToHtmlTable(response){
         table.innerHTML = headerRowHTML + allRecordsHTML;
     }
 
+function clearTable() {
+    var tableHeaderRowCount = 1;
+    var table = document.getElementById("display_json_data");
+    var rowCount = table.rows.length;
+    for (var i = tableHeaderRowCount; i < rowCount; i++) {
+        table.deleteRow(tableHeaderRowCount);
+    }
+}
+
 function httpGetAsync(url, callback) {
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.onreadystatechange = function() {
@@ -39,6 +48,12 @@ function httpGetAsync(url, callback) {
     }
     xmlHttp.open("GET", url, true);
     xmlHttp.send(null);
+}
+
+function search() {
+    clearTable();
+    var input = document.getElementById("myInput").value;
+    httpGetAsync(foodEndpoint + "/restaurant/" + input, convertJsonToHtmlTable);
 }
 
 httpGetAsync(foodEndpoint, convertJsonToHtmlTable);
