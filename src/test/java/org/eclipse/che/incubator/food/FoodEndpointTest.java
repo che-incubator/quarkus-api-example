@@ -58,16 +58,4 @@ public class FoodEndpointTest {
         assertEquals("Fruit Bistro", food.restaurantName);
         assertEquals(0.99, food.price);
     }
-
-    @Test
-    public void testListByRestaurant() {
-        Food[] food = given()
-                .when().get("/food/restaurant/Fruit Bistro")
-                .then().statusCode(200)
-                .extract().as(Food[].class);
-        assertEquals(3, food.length);
-        assertEquals("Apple pie", food[0].name);
-        assertEquals("Orange", food[1].name);
-        assertEquals("Strawberry cake", food[2].name);
-    }
 }
