@@ -56,7 +56,7 @@ commands:
       label: "Package"
       component: tools
       workingDir: ${PROJECTS_ROOT}/quarkus-api-example
-      commandLine: "./mvnw package"
+      commandLine: "./mvnw clean package -DskipTests=true"
       group:
         kind: build
         isDefault: true
