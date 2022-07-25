@@ -61,6 +61,6 @@ public class FoodResource {
     @GET
     @Path("restaurant/{restaurantName}")
     public List<Food> listByRestaurant(@PathParam("restaurantName") String restaurantName) {
-        return Food.find("restaurantName", Sort.by("name"), restaurantName).list();
+        return Food.find("name", Sort.by("name"), restaurantName).list();
     }
 }
