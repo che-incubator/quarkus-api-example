@@ -44,8 +44,8 @@
       <artifactId>quarkus-container-image-docker</artifactId>
     </dependency>
     <dependency>
-       <groupId>io.quarkus</groupId>
-       <artifactId>quarkus-container-image-jib</artifactId>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-container-image-jib</artifactId>
     </dependency>
     <dependency>
       <groupId>io.quarkus</groupId>
@@ -66,6 +66,10 @@
     <dependency>
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-smallrye-openapi</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-oidc</artifactId>
     </dependency>
     <dependency>
       <groupId>io.quarkus</groupId>

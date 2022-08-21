@@ -14,6 +14,7 @@ package org.eclipse.che.incubator.food;
 import java.net.URI;
 import java.util.List;
 
+import javax.annotation.security.RolesAllowed;
 import javax.transaction.Transactional;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -44,6 +45,7 @@ public class FoodResource {
 
     @POST
     @Transactional
+    @RolesAllowed("admin")
     public Response create(Food food) {
         food.persist();
         if (food.isPersistent()) {

@@ -47,6 +47,19 @@ components:
           value: food_db
         - name: PGDATA
           value: /tmp/pgdata
+  - name: keycloak
+    container:
+      image: quay.io/keycloak/keycloak:19.0.0
+      args:
+        - start-dev
+        - --import-realm
+        - --http-port=8081
+      env:
+        - name: KEYCLOAK_ADMIN
+          value: "admin"
+        - name: KEYCLOAK_ADMIN_PASSWORD
+          value: "admin"
+      memoryLimit: 500Mi
   - name: m2
     volume:
       size: 1G
