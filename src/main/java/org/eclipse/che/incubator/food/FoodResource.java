@@ -33,7 +33,7 @@ public class FoodResource {
 
     @GET
     public List<Food> list() {
-        return Food.listAll(Sort.by("name"));
+        return Food.listAll(Sort.by("id"));
     }
 
     @GET
@@ -49,7 +49,7 @@ public class FoodResource {
         if (food.isPersistent()) {
             return Response.created(URI.create("/food/" + food.id)).build();
         }
-        return Response.status(Response.Status.BAD_REQUEST).build();
+        return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
     }
 
     @GET

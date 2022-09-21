@@ -2,25 +2,38 @@
 <html lang="en">
 
 <head>
-<meta charset="UTF-8">
-<title>Quarkus API Example</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="X-UA-Compatible" content="ie=edge">
-<link rel="stylesheet" type="text/css" href="styles.css">
+    <meta charset="UTF-8">
+    <title>Quarkus API Example</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 
 <body>
 
     <div class="banner lead">
-        Your new Cloud-Native application is ready! <input type="text"
-            id="myInput" placeholder="Search for a restaurant"
-            title="Type in a restaurant name">
+        Your new Cloud-Native application is ready! <input type="text" id="myInput"
+            placeholder="Search for a restaurant" title="Type in a restaurant name">
         <button id="search" onclick="search()">Filter</button>
     </div>
 
     <div class="container">
         <!-- table to display the json data -->
-        <table id="display_json_data" class="styled-table"></table>
+        <table id="display_json_data" class="styled-table">
+            <tr id="display_header">
+                <th>id</th>
+                <th>name</th>
+                <th>restaurantName</th>
+                <th>price</th>
+            </tr>
+            <tr>
+                <td><input type="text" id="input_id" name="id"></td>
+                <td><input type="text" id="input_name" name="name"></td>
+                <td><input type="text" id="input_restaurant" name="restaurant"></td>
+                <td><input type="text" id="input_price" name="price"><button id="btn_add_item" onclick="addItem()">Add
+                        Item</button></td>
+            </tr>
+        </table>
     </div>
     <script src="script.js"></script>
 </body>

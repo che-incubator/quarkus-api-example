@@ -1,60 +1,98 @@
-let foodEndpoint = window.location.origin + "/food"
+const foodEndpoint = window.location.origin + '/food';
+const inputId = 'input_id';
+const inputName = 'input_name';
+const inputRestaurant = 'input_restaurant';
+const inputPrice = 'input_price';
 
 function convertJsonToHtmlTable(response) {
-    var json = JSON.parse(response);
+    const json = JSON.parse(response);
     //Get the headers from JSON data
-    var headers = Object.keys(json[0]);
-     
-    //Prepare html header
-    var headerRowHTML='<tr>';
-    for(var i=0;i<headers.length;i++){
-        headerRowHTML+='<th>'+headers[i]+'</th>';
-    }
-    headerRowHTML+='</tr>'; 
-     
+    const headers = Object.keys(json[0]);
+
     //Prepare all the employee records as HTML
-    var allRecordsHTML='';
-    for(var i=0;i<json.length;i++){
-     
+    let allRecordsHTML = '';
+    for (let i = 0; i < json.length; i++) {
+
         //Prepare html row
-        allRecordsHTML+='<tr>';
-        for(var j=0;j<headers.length;j++){
-            var header=headers[j];
-            allRecordsHTML+='<td>'+json[i][header]+'</td>';
+        allRecordsHTML += '<tr class="record">';
+        for (let j = 0; j < headers.length; j++) {
+            const header = headers[j];
+            allRecordsHTML += '<td>' + json[i][header] + '</td>';
         }
-        allRecordsHTML+='</tr>';
-         
+        allRecordsHTML += '</tr>';
     }
 
     //Append the table header and all records
-    var table = document.getElementById("display_json_data");
-    table.innerHTML = headerRowHTML + allRecordsHTML;
-}
-
-function clearTable() {
-    var tableHeaderRowCount = 1;
-    var table = document.getElementById("display_json_data");
-    var rowCount = table.rows.length;
-    for (var i = tableHeaderRowCount; i < rowCount; i++) {
-        table.deleteRow(tableHeaderRowCount);
-    }
+    const table = document.getElementById('display_header');
+    table.insertAdjacentHTML('afterend', allRecordsHTML);
 }
 
 function httpGetAsync(url, callback) {
-    var xmlHttp = new XMLHttpRequest();
-    xmlHttp.onreadystatechange = function() {
-        if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+    const xmlHttp = new XMLHttpRequest();
+    xmlHttp.onreadystatechange = function () {
+        if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
             callback(xmlHttp.responseText);
-    }
-    xmlHttp.open("GET", url, true);
+        }
+    };
+    xmlHttp.open('GET', url, true);
     xmlHttp.send(null);
 }
 
 function search() {
-    clearTable();
-    var input = document.getElementById("myInput").value;
-    httpGetAsync(foodEndpoint + "/restaurant/" + input, convertJsonToHtmlTable);
+    clearTableRecords();
+    const input = document.getElementById('myInput').value;
+    httpGetAsync(foodEndpoint + '/restaurant/' + input, convertJsonToHtmlTable);
+}
+
+function addItem() {
+    const body = getTableInputs();
+    httpPostAsync(foodEndpoint, body, () => {
+        clearTableInputs();
+        clearTableRecords();
+
+        // repopulate populate table
+        httpGetAsync(foodEndpoint, convertJsonToHtmlTable);
+    });
+}
+
+function clearTableRecords() {
+    const table = document.getElementById('display_json_data');
+    let i = 0;
+    while (i < table.rows.length) {
+        if (table.rows[i].className && table.rows[i].className === 'record') {
+            table.rows[i].remove();
+        } else {
+            i++;
+        }
+    }
+}
+
+function getTableInputs() {
+    const id = document.getElementById(inputId).value;
+    const name = document.getElementById(inputName).value;
+    const restaurantName = document.getElementById(inputRestaurant).value;
+    const price = document.getElementById(inputPrice).value;
+    return { id, name, restaurantName, price };
+}
+
+function clearTableInputs() {
+    document.getElementById(inputId).value = '';
+    document.getElementById(inputName).value = '';
+    document.getElementById(inputRestaurant).value = '';
+    document.getElementById(inputPrice).value = '';
+}
+
+function httpPostAsync(url, body, callback) {
+    const xmlHttp = new XMLHttpRequest();
+    xmlHttp.open('POST', url, true);
+    xmlHttp.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+
+    xmlHttp.onreadystatechange = function () {
+        if (xmlHttp.readyState == 4 && xmlHttp.status == 201) {
+            callback(xmlHttp.responseText);
+        }
+    };
+    xmlHttp.send(JSON.stringify(body));
 }
 
 httpGetAsync(foodEndpoint, convertJsonToHtmlTable);
-
