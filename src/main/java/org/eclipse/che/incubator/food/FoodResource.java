@@ -45,6 +45,9 @@ public class FoodResource {
     @POST
     @Transactional
     public Response create(Food food) {
+        if (food.id != null) {
+           return Response.status(Response.Status.BAD_REQUEST).build();
+        }
         food.persist();
         if (food.isPersistent()) {
             return Response.created(URI.create("/food/" + food.id)).build();

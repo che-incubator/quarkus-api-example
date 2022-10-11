@@ -68,11 +68,10 @@ function clearTableRecords() {
 }
 
 function getTableInputs() {
-    const id = document.getElementById(inputId).value;
     const name = document.getElementById(inputName).value;
     const restaurantName = document.getElementById(inputRestaurant).value;
     const price = document.getElementById(inputPrice).value;
-    return { id, name, restaurantName, price };
+    return { name, restaurantName, price };
 }
 
 function clearTableInputs() {
