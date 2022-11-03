@@ -14,4 +14,4 @@ jobs:
         uses: redhat-actions/try-in-web-ide@v1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          web_ide_instance: https://che-dogfooding.apps.che-dev.x6e0.p1.openshiftapps.com
+
