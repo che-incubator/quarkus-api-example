@@ -15,6 +15,21 @@ NOTE: Perfoming a native Quarkus build with the `packagenative` command fails on
 | `GET`  | `/food/restaurant/{restaurantName}` | Lists all Food resources with the specified restaurantName |
 | `POST` | `/food`                             | Creates a Food resource                                    |
 
+## Development with Eclipse Che
+
+This project provides a [devfile.yaml](https://github.com/che-incubator/quarkus-api-example/blob/main/devfile.yaml) file that defines the containers required for development, as well as a list of development commands.
+
+To run these commands from VS Code, open the command palette and navigate to `Tasks: Run Task` > `che`.
+
+| Task                                          | Description                                                                                                     |
+|-----------------------------------------------|-----------------------------------------------------------------------------------------------------------------|
+| `Package`                                     | Runs `mvn package`.                                                                                             |
+| `Run Tests`                                   | Runs `mvn test`.                                                                                                |
+| `Package Native`                              | Runs a Quarkus native build.                                                                                    |
+| `Build Image`                                 | Builds a container image for the Quarkus application running in JVM mode. `Package` task must be run before this task. |
+| `Start Development mode (Hot reload + debug)` | Runs the Quarkus application in development mode.                                                               |
+| `Start Native`                                | Runs the Quarkus native binary. `Package Native` task must be run before this task.                             |
+
 ## Local development
 ### Create PostgresSQL container
 ```
