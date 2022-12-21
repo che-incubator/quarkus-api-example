@@ -61,7 +61,7 @@ commands:
         isDefault: true
   - id: runtests
     exec:
-      label: "Run tests"
+      label: "Run Tests"
       component: tools
       workingDir: ${PROJECTS_ROOT}/quarkus-api-example
       commandLine: "./mvnw test"
@@ -92,6 +92,14 @@ commands:
       commandLine: "./quarkus-api-example-1.0.0-SNAPSHOT-runner"
       group:
         kind: run
+  - id: buildimage
+    exec:
+      label: "Build Image"
+      component: tools
+      workingDir: ${PROJECT_SOURCE}
+      commandLine: "podman build -f src/main/docker/Dockerfile.jvm -t quay.io/che-incubator/quarkus-api-example ."
+      group:
+        kind: build
   - id: tag
     exec:
       label: "Tag Image"
