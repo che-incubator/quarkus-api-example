@@ -5,6 +5,7 @@
       "redhat.vscode-quarkus",
       "vscjava.vscode-java-test",
       "github.vscode-pull-request-github",
+      "sugatoray.vscode-git-extension-pack",
       "genuitecllc.codetogether"
     ]
 }
