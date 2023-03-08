@@ -79,7 +79,7 @@ commands:
   - id: startnative
     exec:
       label: "Start Native"
-      component: ubi-minimal
+      component: tools
       workingDir: ${PROJECTS_ROOT}/quarkus-api-example/target
       commandLine: "./quarkus-api-example-1.0.0-SNAPSHOT-runner"
       group:
