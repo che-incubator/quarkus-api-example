@@ -8,7 +8,7 @@ parent:
   registryUrl: https://registry.stage.devfile.io/
   version: 1.0.0
 components:
-  - name: tools
+  - name: child-tools
     container:
       image: quay.io/devfile/universal-developer-image:ubi8-latest
       env:
