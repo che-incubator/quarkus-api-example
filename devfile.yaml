@@ -7,47 +7,6 @@ parent:
   id: udi
   registryUrl: https://registry.stage.devfile.io/
   version: 1.0.0
-components:
-  - name: child-tools
-    container:
-      image: quay.io/devfile/universal-developer-image:ubi8-latest
-      env:
-        - name: QUARKUS_HTTP_HOST
-          value: 0.0.0.0
-      endpoints:
-        - exposure: none
-          name: debug
-          protocol: tcp
-          targetPort: 5005
-        - exposure: public
-          name: list-all-food
-          protocol: http
-          targetPort: 8080
-          path: /food
-      volumeMounts:
-        - name: m2
-          path: /home/user/.m2
-      memoryLimit: 6G
-      memoryRequest: 512Mi
-      cpuRequest: 1000m
-      cpuLimit: 4000m
-      mountSources: true
-
-  - name: postgresql
-    container:
-      image: 'quay.io/centos7/postgresql-13-centos7@sha256:994f5c622e2913bda1c4a7fa3b0c7e7f75e7caa3ac66ff1ed70ccfe65c40dd75'
-      env:
-        - name: POSTGRESQL_USER
-          value: user
-        - name: POSTGRESQL_PASSWORD
-          value: password
-        - name: POSTGRESQL_DATABASE
-          value: food_db
-        - name: PGDATA
-          value: /tmp/pgdata
-  - name: m2
-    volume:
-      size: 1G
 commands:
   - id: package
     exec:
