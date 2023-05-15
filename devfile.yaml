@@ -28,6 +28,11 @@ components:
       cpuRequest: 1000m
       cpuLimit: 4000m
       mountSources: true
+  
+  - name: flutter-sdk
+    container:
+      image: 'mobiledevops/flutter-sdk-image:3.7.12'
+      command: ['sleep', 'infinity']
 
   - name: postgresql
     container:
