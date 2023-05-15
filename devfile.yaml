@@ -44,6 +44,12 @@ components:
   - name: m2
     volume:
       size: 1G
+      
+  - name: flutter-sdk
+  container:
+    image: 'mobiledevops/flutter-sdk-image:3.7.12'
+    command: ['sleep', 'infinity']  
+
 commands:
   - id: package
     exec:
