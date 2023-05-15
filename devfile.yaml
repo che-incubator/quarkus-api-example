@@ -28,6 +28,7 @@ components:
       cpuRequest: 1000m
       cpuLimit: 4000m
       mountSources: true
+      command: ['sleep', 'infinity']
 
   - name: postgresql
     container:
