@@ -33,6 +33,7 @@ components:
     container:
       image: 'mobiledevops/flutter-sdk-image:3.7.12'
       command: ['sleep', 'infinity']
+      mountSources: true
 
   - name: postgresql
     container:
