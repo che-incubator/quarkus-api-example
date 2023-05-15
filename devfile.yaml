@@ -3,15 +3,7 @@ metadata:
   generateName: quarkus-api-example
 attributes:
   controller.devfile.io/storage-type: ephemeral
-components:
-  - name: tools
-    container:
-      image: quay.io/devfile/universal-developer-image:ubi8-latest
-      env:
-        - name: QUARKUS_HTTP_HOST
-          value: 0.0.0.0
-      endpoints:
-        - exposure: none
+
           name: debug
           protocol: tcp
           targetPort: 5005
@@ -28,6 +20,11 @@ components:
       cpuRequest: 1000m
       cpuLimit: 4000m
       mountSources: true
+
+  - name: flutter-sdk
+    container:
+      image: 'mobiledevops/flutter-sdk-image:3.7.12'
+      command: ['sleep', 'infinity']  
 
   - name: postgresql
     container:
