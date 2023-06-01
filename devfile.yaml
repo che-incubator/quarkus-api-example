@@ -95,14 +95,6 @@ commands:
       commandLine: "podman build -f src/main/docker/Dockerfile.jvm -t quay.io/che-incubator/quarkus-api-example ."
       group:
         kind: build
-  - id: tag
-    exec:
-      label: "Tag Image"
-      component: tools
-      workingDir: ${PROJECTS_ROOT}/quarkus-api-example
-      commandLine: "podman tag localhost/quarkus/getting-started-jvm:latest quay.io/ibuziuk/quarkus-api-example:demo"
-      group:
-        kind: test
   - id: deploypostgres
     exec:
       label: "Deploy Postrgres"
