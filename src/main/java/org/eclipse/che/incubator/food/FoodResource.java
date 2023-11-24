@@ -33,7 +33,7 @@ public class FoodResource {
 
     @GET
     public List<Food> list() {
-        return Food.listAll(Sort.by("id"));
+        return Food.listAll(Sort.by("name"));
     }
 
     @GET
