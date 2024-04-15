@@ -1,4 +1,4 @@
-schemaVersion: 2.2.0
+schemaVersion: 2.2.2
 metadata:
   generateName: quarkus-api-example
 attributes:
@@ -15,11 +15,13 @@ components:
           name: debug
           protocol: tcp
           targetPort: 5005
-        - exposure: public
-          name: list-all-food
-          protocol: http
+        - name: list-all-food
+          protocol: https
+          secure: true
           targetPort: 8080
           path: /food
+          attributes: 
+            urlRewriteSupported: 'true'
       volumeMounts:
         - name: m2
           path: /home/user/.m2
