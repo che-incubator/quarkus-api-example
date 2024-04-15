@@ -17,7 +17,8 @@ components:
           targetPort: 5005
         - exposure: public
           name: list-all-food
-          protocol: http
+          protocol: https
+          secure: true
           targetPort: 8080
           path: /food
       volumeMounts:
