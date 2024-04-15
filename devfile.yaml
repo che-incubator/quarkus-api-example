@@ -15,8 +15,7 @@ components:
           name: debug
           protocol: tcp
           targetPort: 5005
-        - exposure: internal
-          name: list-all-food
+        - name: list-all-food
           protocol: https
           secure: true
           targetPort: 8080
