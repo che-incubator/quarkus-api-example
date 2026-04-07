@@ -16,6 +16,7 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -53,6 +54,18 @@ public class FoodResource {
             return Response.created(URI.create("/food/" + food.id)).build();
         }
         return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+    }
+
+    @DELETE
+    @Path("/{id}")
+    @Transactional
+    public Response delete(@PathParam("id") Long id) {
+        Food entity = Food.findById(id);
+        if (entity == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+        entity.delete();
+        return Response.noContent().build();
     }
 
     @GET

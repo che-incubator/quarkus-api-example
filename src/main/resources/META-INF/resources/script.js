@@ -48,7 +48,14 @@ function search() {
 
 // Display food items as cards
 function displayFoodItems(response) {
-    const data = JSON.parse(response);
+    let data;
+    try {
+        data = JSON.parse(response);
+    } catch (e) {
+        showError('Received an invalid response from server.');
+        updateStats([]);
+        return;
+    }
     allFoodItems = data;
 
     const foodGrid = document.getElementById('foodGrid');
@@ -255,6 +262,7 @@ function httpDeleteAsync(url, successCallback, errorCallback) {
 
 // Escape HTML to prevent XSS
 function escapeHtml(text) {
+    const normalized = String(text ?? '');
     const map = {
         '&': '&amp;',
         '<': '&lt;',
@@ -262,5 +270,5 @@ function escapeHtml(text) {
         '"': '&quot;',
         "'": '&#039;'
     };
-    return text.replace(/[&<>"']/g, m => map[m]);
+    return normalized.replace(/[&<>"']/g, m => map[m]);
 }

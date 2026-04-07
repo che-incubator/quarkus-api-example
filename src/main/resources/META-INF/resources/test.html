@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Frontend Tests</title>
+    <script src="script.js"></script>
+</head>
+<body>
+    <h1>Frontend Tests</h1>
+    <div id="error" class="hidden"></div>
+    <div id="foodGrid"></div>
+    <div id="emptyState" class="hidden"></div>
+    <div id="totalItems"></div>
+    <div id="totalRestaurants"></div>
+    <div id="avgPrice"></div>
+
+    <script>
+        // Mocking functions that are not under test
+        function showLoading() {}
+        function hideLoading() {}
+        function httpGetAsync() {}
+        function httpPostAsync() {}
+        function httpDeleteAsync() {}
+
+        // Test runner
+        function runTests() {
+            console.log("Running frontend tests...");
+
+            // Test case 1: displayFoodItems with malformed JSON
+            try {
+                console.log("Test 1: displayFoodItems with malformed JSON");
+                const malformedJSON = "{'name': 'test'}"; // single quotes are invalid
+                displayFoodItems(malformedJSON);
+                const errorDiv = document.getElementById('error');
+                console.assert(!errorDiv.classList.contains('hidden'), "Test 1 Failed: Error message should be shown");
+                console.assert(errorDiv.textContent.includes('Received an invalid response from server'), "Test 1 Failed: Incorrect error message");
+            } catch (e) {
+                console.error("Test 1 Failed with exception:", e);
+            }
+
+            // Test case 2: escapeHtml with null
+            try {
+                console.log("Test 2: escapeHtml with null");
+                const result = escapeHtml(null);
+                console.assert(result === '', "Test 2 Failed: Should return an empty string for null");
+            } catch (e) {
+                console.error("Test 2 Failed with exception:", e);
+            }
+
+            // Test case 3: escapeHtml with undefined
+            try {
+                console.log("Test 3: escapeHtml with undefined");
+                const result = escapeHtml(undefined);
+                console.assert(result === '', "Test 3 Failed: Should return an empty string for undefined");
+            } catch (e) {
+                console.error("Test 3 Failed with exception:", e);
+            }
+            
+            // Test case 4: escapeHtml with a valid string
+            try {
+                console.log("Test 4: escapeHtml with a valid string");
+                const result = escapeHtml('<script>alert("xss")<\\/script>');
+                console.assert(result === '<script>alert("xss")<\\/script>', "Test 4 Failed: HTML should be escaped");
+            } catch (e) {
+                console.error("Test 4 Failed with exception:", e);
+            }
+
+            console.log("Frontend tests finished.");
+        }
+
+        // Run tests on load
+        window.onload = runTests;
+    </script>
+</body>
+</html>

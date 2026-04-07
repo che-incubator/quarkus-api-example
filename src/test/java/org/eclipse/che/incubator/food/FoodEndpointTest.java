@@ -70,4 +70,29 @@ public class FoodEndpointTest {
         assertEquals("Orange", food[1].name);
         assertEquals("Strawberry cake", food[2].name);
     }
+
+    @Test
+    public void testDelete() {
+        // Given a food exists
+        given()
+            .when().get("/food/1")
+            .then().statusCode(200);
+
+        // When we delete it
+        given()
+                .when().delete("/food/1")
+                .then().statusCode(204);
+
+        // Then it is gone
+        given()
+                .when().get("/food/1")
+                .then().statusCode(204); // No content because it was deleted
+
+        // And the list is smaller
+        Food[] foods = given()
+                .when().get("/food")
+                .then().statusCode(200)
+                .extract().as(Food[].class);
+        assertEquals(4, foods.length);
+    }
 }
