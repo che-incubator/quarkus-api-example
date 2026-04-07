@@ -3,38 +3,99 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Quarkus API Example</title>
+    <title>Food Manager - Quarkus API</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 
 <body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <h1 class="app-title">🍔 Food Manager</h1>
+            <p class="app-subtitle">Quarkus Cloud-Native Application</p>
+        </div>
+    </header>
 
-    <div class="banner lead">
-        Your new Cloud-Native application is ready! <input type="text" id="myInput"
-            placeholder="Search for a restaurant" title="Type in a restaurant name">
-        <button id="search" onclick="search()">Filter</button>
-    </div>
+    <!-- Main Content -->
+    <main class="main-container">
+        <!-- Search and Filter Section -->
+        <section class="search-section">
+            <div class="search-box">
+                <input type="text" id="myInput" class="search-input"
+                    placeholder="🔍 Search by restaurant name..."
+                    title="Type in a restaurant name">
+                <button id="search" class="btn btn-primary" onclick="search()">Search</button>
+                <button id="clearSearch" class="btn btn-secondary" onclick="loadAllFood()">Show All</button>
+            </div>
+        </section>
 
-    <div class="container">
-        <!-- table to display the json data -->
-        <table id="display_json_data" class="styled-table">
-            <tr id="display_header">
-                <th>id</th>
-                <th>name</th>
-                <th>restaurantName</th>
-                <th>price</th>
-            </tr>
-            <tr>
-                <td><input type="text" id="input_id" name="id" disabled></td>
-                <td><input type="text" id="input_name" name="name"></td>
-                <td><input type="text" id="input_restaurant" name="restaurant"></td>
-                <td><input type="text" id="input_price" name="price"><button id="btn_add_item" onclick="addItem()">Add
-                        Item</button></td>
-            </tr>
-        </table>
-    </div>
+        <!-- Add New Item Section -->
+        <section class="add-section">
+            <h2 class="section-title">Add New Food Item</h2>
+            <form id="addForm" class="add-form" onsubmit="addItem(event)">
+                <div class="form-group">
+                    <label for="input_name">Food Name</label>
+                    <input type="text" id="input_name" name="name" class="form-input"
+                        placeholder="e.g., Burger" required>
+                </div>
+                <div class="form-group">
+                    <label for="input_restaurant">Restaurant</label>
+                    <input type="text" id="input_restaurant" name="restaurant" class="form-input"
+                        placeholder="e.g., McDonald's" required>
+                </div>
+                <div class="form-group">
+                    <label for="input_price">Price ($)</label>
+                    <input type="number" id="input_price" name="price" class="form-input"
+                        placeholder="0.00" step="0.01" min="0" required>
+                </div>
+                <button type="submit" class="btn btn-success">➕ Add Item</button>
+            </form>
+        </section>
+
+        <!-- Loading Indicator -->
+        <div id="loading" class="loading hidden">
+            <div class="spinner"></div>
+            <p>Loading...</p>
+        </div>
+
+        <!-- Error Message -->
+        <div id="error" class="error-message hidden"></div>
+
+        <!-- Stats Section -->
+        <section class="stats-section">
+            <div class="stat-card">
+                <div class="stat-value" id="totalItems">0</div>
+                <div class="stat-label">Total Items</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="totalRestaurants">0</div>
+                <div class="stat-label">Restaurants</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="avgPrice">$0.00</div>
+                <div class="stat-label">Avg Price</div>
+            </div>
+        </section>
+
+        <!-- Food Items Grid -->
+        <section class="items-section">
+            <h2 class="section-title">Food Items</h2>
+            <div id="foodGrid" class="food-grid">
+                <!-- Food cards will be inserted here -->
+            </div>
+            <div id="emptyState" class="empty-state hidden">
+                <p>No food items found. Add some to get started!</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>Powered by Quarkus • Cloud-Native Java Framework</p>
+    </footer>
+
     <script src="script.js"></script>
 </body>
 </html>
