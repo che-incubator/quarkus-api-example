@@ -1,5 +1,6 @@
 const foodEndpoint = window.location.origin + '/food';
 let allFoodItems = [];
+let statusTimeout;
 
 // Initialize the app
 document.addEventListener('DOMContentLoaded', () => {
@@ -83,21 +84,22 @@ function displayFoodItems(response) {
 
 // Create a food card element
 function createFoodCard(item) {
-    const card = document.createElement('div');
-    card.className = 'food-card';
+    const card = document.createElement('article');
+    card.className = 'pf-v6-c-card food-card';
     card.innerHTML = `
-        <div class="food-card-header">
-            <div>
-                <div class="food-name">${escapeHtml(item.name)}</div>
-                <div class="food-id">ID: ${item.id}</div>
-            </div>
+        <div class="pf-v6-c-card__title">
+            <h3 class="pf-v6-c-card__title-text">${escapeHtml(item.name)}</h3>
         </div>
-        <div class="food-restaurant">${escapeHtml(item.restaurantName)}</div>
-        <div class="food-footer">
+        <div class="pf-v6-c-card__body">
+            <div class="food-restaurant">${escapeHtml(item.restaurantName)}</div>
+            <div class="food-id">ID: ${escapeHtml(item.id)}</div>
+        </div>
+        <div class="pf-v6-c-card__footer food-footer">
             <div class="food-price">$${parseFloat(item.price).toFixed(2)}</div>
-            <button class="btn btn-danger" onclick="deleteItem(${item.id})">🗑️ Delete</button>
+            <button type="button" class="pf-v6-c-button pf-m-link pf-m-danger" aria-label="Delete ${escapeHtml(item.name)}">Delete</button>
         </div>
     `;
+    card.querySelector('button').addEventListener('click', () => deleteItem(item.id));
     return card;
 }
 
@@ -182,31 +184,29 @@ function hideLoading() {
 
 // Show error message
 function showError(message) {
-    const errorDiv = document.getElementById('error');
-    errorDiv.textContent = '⚠️ ' + message;
-    errorDiv.classList.remove('hidden');
-    setTimeout(() => hideError(), 5000);
+    showStatus(message, 'danger', 5000);
 }
 
 // Hide error message
 function hideError() {
+    clearTimeout(statusTimeout);
     document.getElementById('error').classList.add('hidden');
 }
 
 // Show success message
 function showSuccess(message) {
+    showStatus(message, 'success', 3000);
+}
+
+function showStatus(message, variant, duration) {
+    clearTimeout(statusTimeout);
     const errorDiv = document.getElementById('error');
-    errorDiv.textContent = '✅ ' + message;
-    errorDiv.style.background = '#D1FAE5';
-    errorDiv.style.color = '#065F46';
-    errorDiv.style.borderLeft = '4px solid #10B981';
-    errorDiv.classList.remove('hidden');
-    setTimeout(() => {
-        hideError();
-        errorDiv.style.background = '';
-        errorDiv.style.color = '';
-        errorDiv.style.borderLeft = '';
-    }, 3000);
+    errorDiv.className = `pf-v6-c-alert pf-m-inline pf-m-${variant} status-message`;
+    const title = document.createElement('p');
+    title.className = 'pf-v6-c-alert__title';
+    title.textContent = message;
+    errorDiv.replaceChildren(title);
+    statusTimeout = setTimeout(hideError, duration);
 }
 
 // HTTP GET request

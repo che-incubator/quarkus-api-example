@@ -1,101 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <title>Food Manager - Quarkus API</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" type="text/css" href="styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@patternfly/patternfly@6.6.1/patternfly.min.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
-    <!-- Header -->
-    <header class="header">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="app-header">
         <div class="header-content">
-            <h1 class="app-title">🍔 Food Manager</h1>
-            <p class="app-subtitle">Quarkus Cloud-Native Application</p>
+            <!-- Official Quarkus artwork, embedded to avoid a separate asset request. -->
+            <svg class="brand-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="32" height="32" aria-hidden="true" focusable="false">
+                <polygon fill="#4695eb" points="669.34 180.57 512 271.41 669.34 362.25 669.34 180.57"/>
+                <polygon fill="#ff004a" points="354.66 180.57 354.66 362.25 512 271.41 354.66 180.57"/>
+                <polygon fill="#091313" points="669.34 362.25 512 271.41 354.66 362.25 512 453.09 669.34 362.25"/>
+                <polygon fill="#4695eb" points="188.76 467.93 346.1 558.76 346.1 377.09 188.76 467.93"/>
+                <polygon fill="#ff004a" points="346.1 740.44 503.43 649.6 346.1 558.76 346.1 740.44"/>
+                <polygon fill="#091313" points="346.1 377.09 346.1 558.76 503.43 649.6 503.43 467.93 346.1 377.09"/>
+                <polygon fill="#4695eb" points="677.9 740.44 677.9 558.76 520.57 649.6 677.9 740.44"/>
+                <polygon fill="#ff004a" points="835.24 467.93 677.9 377.09 677.9 558.76 835.24 467.93"/>
+                <polygon fill="#091313" points="520.57 649.6 677.9 558.76 677.9 377.09 520.57 467.93 520.57 649.6"/>
+                <path fill="#4695eb" d="M853.47,1H170.53C77.29,1,1,77.29,1,170.53V853.47C1,946.71,77.29,1023,170.53,1023h467.7L512,716.39,420.42,910H170.53C139.9,910,114,884.1,114,853.47V170.53C114,139.9,139.9,114,170.53,114H853.47C884.1,114,910,139.9,910,170.53V853.47C910,884.1,884.1,910,853.47,910H705.28l46.52,113H853.47c93.24,0,169.53-76.29,169.53-169.53V170.53C1023,77.29,946.71,1,853.47,1Z"/>
+            </svg>
+            <span class="app-title">Food Manager</span>
+            <span class="app-subtitle">Quarkus</span>
         </div>
     </header>
-
-    <!-- Main Content -->
-    <main class="main-container">
-        <!-- Search and Filter Section -->
-        <section class="search-section">
-            <div class="search-box">
-                <input type="text" id="myInput" class="search-input"
-                    placeholder="🔍 Search by restaurant name..."
-                    title="Type in a restaurant name">
-                <button id="search" class="btn btn-primary" onclick="search()">Search</button>
-                <button id="clearSearch" class="btn btn-secondary" onclick="loadAllFood()">Show All</button>
-            </div>
+    <main id="main" class="main-container" tabindex="-1">
+        <div class="page-heading"><h1 class="pf-v6-c-title pf-m-2xl">Food overview</h1></div>
+        <section class="stats-section" aria-label="Current results summary">
+            <div class="stat"><div class="stat-value" id="totalItems">0</div><div class="stat-label">Food items</div></div>
+            <div class="stat"><div class="stat-value" id="totalRestaurants">0</div><div class="stat-label">Restaurants</div></div>
+            <div class="stat"><div class="stat-value" id="avgPrice">$0.00</div><div class="stat-label">Average price</div></div>
         </section>
-
-        <!-- Add New Item Section -->
-        <section class="add-section">
-            <h2 class="section-title">Add New Food Item</h2>
+        <section class="add-section" aria-labelledby="addTitle">
+            <h2 id="addTitle" class="pf-v6-c-title pf-m-lg section-title">Add food item</h2>
             <form id="addForm" class="add-form" onsubmit="addItem(event)">
                 <div class="form-group">
-                    <label for="input_name">Food Name</label>
-                    <input type="text" id="input_name" name="name" class="form-input"
-                        placeholder="e.g., Burger" required>
+                    <label for="input_name">Food name <span aria-hidden="true">*</span></label>
+                    <span class="pf-v6-c-form-control"><input type="text" id="input_name" name="name" placeholder="e.g., Burger" required></span>
                 </div>
                 <div class="form-group">
-                    <label for="input_restaurant">Restaurant</label>
-                    <input type="text" id="input_restaurant" name="restaurant" class="form-input"
-                        placeholder="e.g., McDonald's" required>
+                    <label for="input_restaurant">Restaurant <span aria-hidden="true">*</span></label>
+                    <span class="pf-v6-c-form-control"><input type="text" id="input_restaurant" name="restaurant" placeholder="e.g., Five Guys" required></span>
                 </div>
                 <div class="form-group">
-                    <label for="input_price">Price ($)</label>
-                    <input type="number" id="input_price" name="price" class="form-input"
-                        placeholder="0.00" step="0.01" min="0" required>
+                    <label for="input_price">Price ($) <span aria-hidden="true">*</span></label>
+                    <span class="pf-v6-c-form-control"><input type="number" id="input_price" name="price" placeholder="0.00" step="0.01" min="0" required></span>
                 </div>
-                <button type="submit" class="btn btn-success">➕ Add Item</button>
+                <button type="submit" class="pf-v6-c-button pf-m-primary">Add item</button>
             </form>
         </section>
-
-        <!-- Loading Indicator -->
-        <div id="loading" class="loading hidden">
-            <div class="spinner"></div>
-            <p>Loading...</p>
-        </div>
-
-        <!-- Error Message -->
-        <div id="error" class="error-message hidden"></div>
-
-        <!-- Stats Section -->
-        <section class="stats-section">
-            <div class="stat-card">
-                <div class="stat-value" id="totalItems">0</div>
-                <div class="stat-label">Total Items</div>
+        <div id="error" class="pf-v6-c-alert pf-m-inline pf-m-danger status-message hidden" role="status" aria-live="polite" aria-atomic="true"></div>
+        <div id="loading" class="loading hidden" role="status"><div class="spinner" aria-hidden="true"></div><span>Loading food items...</span></div>
+        <section class="items-section" aria-labelledby="itemsTitle">
+            <div class="items-heading">
+                <h2 id="itemsTitle" class="pf-v6-c-title pf-m-lg">Food items</h2>
+                <form class="search-box" role="search" onsubmit="event.preventDefault(); search()">
+                    <span class="pf-v6-c-form-control search-field"><input type="search" id="myInput" placeholder="Filter by restaurant" aria-label="Restaurant name"></span>
+                    <button id="search" type="submit" class="pf-v6-c-button pf-m-secondary">Search</button>
+                    <button id="clearSearch" type="button" class="pf-v6-c-button pf-m-link" onclick="loadAllFood()">Reset</button>
+                </form>
             </div>
-            <div class="stat-card">
-                <div class="stat-value" id="totalRestaurants">0</div>
-                <div class="stat-label">Restaurants</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-value" id="avgPrice">$0.00</div>
-                <div class="stat-label">Avg Price</div>
-            </div>
-        </section>
-
-        <!-- Food Items Grid -->
-        <section class="items-section">
-            <h2 class="section-title">Food Items</h2>
-            <div id="foodGrid" class="food-grid">
-                <!-- Food cards will be inserted here -->
-            </div>
-            <div id="emptyState" class="empty-state hidden">
-                <p>No food items found. Add some to get started!</p>
+            <div id="foodGrid" class="food-grid"></div>
+            <div id="emptyState" class="empty-state hidden" role="status">
+                <h3 class="pf-v6-c-title pf-m-lg">No food items found</h3>
+                <p>No results for the current selection.</p>
             </div>
         </section>
     </main>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <p>Powered by Quarkus • Cloud-Native Java Framework</p>
-    </footer>
-
+    <footer class="footer">Powered by Quarkus</footer>
     <script src="script.js"></script>
 </body>
 </html>
