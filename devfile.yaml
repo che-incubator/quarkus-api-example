@@ -103,6 +103,13 @@ commands:
       commandLine: "oc new-app -e POSTGRESQL_USER=user -e POSTGRESQL_PASSWORD=password -e POSTGRESQL_DATABASE=food_db postgresql:10-el7 -n demo"
       group:
         kind: test
-events:
-  postStart:
-    - package
+  - id: install-claude
+    exec:
+      label: "4. Install Claude CLI"
+      commandLine: curl -fsSL https://claude.ai/install.sh -o claude-install.sh && chmod +x claude-install.sh && ./claude-install.sh
+      component: tools
+  - id: run-claude-yolo
+    exec:
+      label: "5. Run Claude YOLO"
+      commandLine: claude --dangerously-skip-permissions
+      component: tools
